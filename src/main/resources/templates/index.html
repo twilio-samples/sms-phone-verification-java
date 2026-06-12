@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Twilio Verify</title>
+    <link rel="stylesheet" href="https://assets.twilio.com/public_assets/paste-fonts/1.5.2/fonts.css">
+    <link rel="stylesheet" th:href="@{/css/paste.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a th:href="@{/}" class="logo">Twilio Verify</a>
+            <nav class="nav">
+                <a th:href="@{/login}" class="btn btn-secondary btn-small">Login</a>
+                <a th:href="@{/register}" class="btn btn-primary btn-small">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <h1 class="card-title">SMS Phone Verification</h1>
+                <p>Secure user registration with SMS phone verification using Twilio Verify API.</p>
+                <p>Get started by creating an account.</p>
+                <div style="margin-top: 24px;">
+                    <a th:href="@{/register}" class="btn btn-primary btn-full">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by Twilio Verify API</p>
+    </footer>
+</body>
+</html>

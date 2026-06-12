@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Twilio Verify</title>
+    <link rel="stylesheet" href="https://assets.twilio.com/public_assets/paste-fonts/1.5.2/fonts.css">
+    <link rel="stylesheet" th:href="@{/css/paste.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a th:href="@{/}" class="logo">Twilio Verify</a>
+            <nav class="nav">
+                <a th:href="@{/register}" class="btn btn-primary btn-small">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <h1 class="card-title">Welcome Back</h1>
+
+                <form th:action="@{/login}" method="post">
+                    <div th:if="${param.error}" class="alert alert-error">Invalid username or password</div>
+                    <div th:if="${param.logout}" class="alert alert-success">You have been logged out</div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label required">Username</label>
+                        <input type="text" id="username" name="username" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label required">Password</label>
+                        <input type="password" id="password" name="password" class="form-input" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Log In</button>
+                </form>
+
+                <p class="text-center mt-60">
+                    Don't have an account? <a th:href="@{/register}" class="text-link">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by Twilio Verify API</p>
+    </footer>
+</body>
+</html>

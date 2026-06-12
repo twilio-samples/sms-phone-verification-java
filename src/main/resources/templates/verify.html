@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Phone - Twilio Verify</title>
+    <link rel="stylesheet" href="https://assets.twilio.com/public_assets/paste-fonts/1.5.2/fonts.css">
+    <link rel="stylesheet" th:href="@{/css/paste.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a th:href="@{/}" class="logo">Twilio Verify</a>
+            <nav class="nav">
+                <span class="nav-text" th:text="${user.username}"></span>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <h1 class="card-title">Verify Your Phone</h1>
+                <p class="mb-60">Enter the verification code sent to your phone number.</p>
+
+                <div id="messages"></div>
+
+                <form th:action="@{/verify}" method="post">
+                    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+                    <div class="form-group">
+                        <label for="code" class="form-label required">Verification Code</label>
+                        <input type="text" id="code" name="code" class="form-input verification-code-input" maxlength="6" placeholder="000000" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Verify Code</button>
+                </form>
+
+                <hr class="divider">
+
+                <div>
+                    <h3 class="mb-60">Didn't receive the code?</h3>
+                    <div class="form-group">
+                        <label class="form-label">Resend via:</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input name="channel" type="radio" value="sms" checked>
+                                <span>SMS</span>
+                            </label>
+                            <label class="radio-label">
+                                <input name="channel" type="radio" value="call">
+                                <span>Call</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" id="resend" class="btn btn-secondary btn-full">Resend Code</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by Twilio Verify API</p>
+    </footer>
+
+    <script>
+        document.getElementById('resend').addEventListener('click', function() {
+            const channel = document.querySelector('input[name="channel"]:checked').value;
+            fetch('/api/verify/resend?channel=' + channel, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+            .then(response => response.json())
+            .then(data => {
+                const messagesDiv = document.getElementById('messages');
+                if (data.success) {
+                    messagesDiv.innerHTML = '<div class="alert alert-success">' + data.message + '</div>';
+                } else {
+                    messagesDiv.innerHTML = '<div class="alert alert-error">' + data.message + '</div>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('messages').innerHTML = '<div class="alert alert-error">Request failed</div>';
+            });
+        });
+    </script>
+</body>
+</html>

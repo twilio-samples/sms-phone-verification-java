@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Twilio Verify</title>
+    <link rel="stylesheet" href="https://assets.twilio.com/public_assets/paste-fonts/1.5.2/fonts.css">
+    <link rel="stylesheet" th:href="@{/css/paste.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.0.0/build/css/intlTelInput.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a th:href="@{/}" class="logo">Twilio Verify</a>
+            <nav class="nav">
+                <a th:href="@{/login}" class="btn btn-secondary btn-small">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <h1 class="card-title">Create Account</h1>
+
+                <form th:action="@{/register}" th:object="${user}" method="post">
+                    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label required">Username</label>
+                        <input type="text" id="username" th:field="*{username}" class="form-input" required>
+                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label required">Password</label>
+                        <input type="password" id="password" th:field="*{password}" class="form-input" required>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone_number" class="form-label required">Phone Number</label>
+                        <input type="tel" id="phone_number" th:field="*{phoneNumber}" class="form-input" required>
+                        <p class="form-help">Select your country and enter your phone number</p>
+                        <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Register</button>
+                </form>
+
+                <p class="text-center mt-60">
+                    Already have an account? <a th:href="@{/login}" class="text-link">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by Twilio Verify API</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.0.0/build/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phone_number");
+        const iti = window.intlTelInput(input, {
+            initialCountry: "us",
+            preferredCountries: ["us", "gb", "ca", "au"],
+            separateDialCode: true,
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.0.0/build/js/utils.js"
+        });
+
+        input.form.addEventListener('submit', function() {
+            input.value = iti.getNumber();
+        });
+    </script>
+</body>
+</html>
