@@ -11,7 +11,7 @@ A Spring Boot application with user registration, authentication, and SMS phone 
 ### Requirements
 
 - Java 21+ ([Download](https://www.oracle.com/java/technologies/downloads/) or install via [SDKMAN](https://sdkman.io/))
-- [Maven](httpbrew install mavens://maven.apache.org/) 3.6+
+- [Maven](https://maven.apache.org/) 3.6+
 - [A Twilio Verify Service](https://console.twilio.com/?frameUrl=/console/verify/services)
 
 ### Twilio Account Settings
